@@ -40,23 +40,37 @@ class App extends React.Component {
     // id (number), text (string), and isComplete (boolean).
     // hint: Use this.nextId and change it in some way.
 
-    // TODO(#6) Add the todo to the nextState.todos array.
+    let todo = {
+      id : this.nextId++,
+      text : todoInputValue,
+      isComplete : false,
+    };
 
+    // TODO(#6) Add the todo to the nextState.todos array.
+    nextState.todos.push(todo);
+    
     // Set the next state.
     this.setState(nextState);
   }
 
   onTodoListItemToggle(id) {
     // TODO(#13) Deep copy the state.
+    const nextState = cloneDeep(this.state);
 
     // TODO(#14) Find the todo that matches the id.
     // If there is no matched todo, do nothing.
     // hint: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
+    if (nextState.todos.find(element => element.id === id)) {
 
     // TODO(#15) Update the matched todo's isComplete property
     // to be the opposite of what it is currently set.
+      element.isComplete = !element.isComplete;
+    } else {
+      return;
+    }
 
     // TODO(#16) Set the next state.
+    this.setState(nextState);
   }
 
   onTodoListItemRemove(id) {
@@ -74,7 +88,7 @@ class App extends React.Component {
     return (
       <div className="container">
         <h1>{this.state.reactDevName}'s Todos</h1>
-        <TodoInput onEnter={/* TODO(#7) Use this.onTodoInputEnter */} />
+        <TodoInput onEnter={ this.onTodoInputEnter /* TODO(#7) Use this.onTodoInputEnter */} />
 
         <br />
 
